@@ -1,0 +1,12 @@
+FROM python:3
+
+ADD modbus-sungrow-sg5d.py /solar/
+ADD solarquery.py /solar/
+
+RUN pip install pymodbus
+RUN pip install dweepy
+RUN pip install influxdb
+RUN pip install python_dateutil
+RUN pip install pytz
+
+CMD [ "python", "./solarquery.py" ]
