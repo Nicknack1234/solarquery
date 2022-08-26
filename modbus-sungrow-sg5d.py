@@ -7,13 +7,20 @@ read_register = {
   "5011":  "5011",
   "5012":  "5012", #MPPT2 Voltage
   "5013":  "5013", #MPPT2 Current grafana shows 51 its actually 5.1
+  "5014":  "5014",
   "5016":  "5016", #Total Active Power!!
+  "5017":  "5017", 
   "5018":  "5018", 
   "5021":  "5021",
   "5030":  "5030",
   "5032":  "5032",
   "5034":  "5034", #Power Factor
   "5035":  "5035", #Grid Frequency
+  "5082":  "5082",
+  "5083":  "5083",
+  "5084":  "5084",
+  "5090":  "5090",
+  "5091":  "5091",
   "5090":  "5090", #Smart Meter Load Power
   "5092":  "5092", #Smart Meter Daily Reverse Active Energy
   "5094":  "5094", #Smart Meter Reverse Active Energy

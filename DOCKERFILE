@@ -2,6 +2,8 @@ FROM python:3
 
 ADD modbus-sungrow-sg5d.py /solar/
 ADD solarquery.py /solar/
+ADD RS485Ext.py /solar/
+ADD writec.so /solar/
 
 RUN pip install pymodbus
 RUN pip install dweepy

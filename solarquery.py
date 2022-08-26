@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 
-from pymodbus.payload import BinaryPayloadDecoder
-from pymodbus.constants import Endian
-from pymodbus.client.sync import ModbusTcpClient
+import RS485Ext
+from pymodbus.client.sync import ModbusSerialClient
 from influxdb import InfluxDBClient
-import json
 import time
-import datetime
 import requests
 from threading import Thread
 import os
@@ -15,15 +12,15 @@ MIN_SIGNED   = -2147483648
 MAX_UNSIGNED =  4294967295
 
 MODEL = os.getenv('model', 'sungrow-sg5d')
-INVIP = os.getenv('inverter_ip', '')
-INVPORT = int(os.getenv('inverter_port', 502))
+#INVIP = os.getenv('inverter_ip', '')
+#INVPORT = int(os.getenv('inverter_port', 502))
 INVTIMEOUT = int(os.getenv('timeout', 3))
 
-INFIP = os.getenv('influxdb_ip', '')
+INFIP = os.getenv('influxdb_ip', 'nick.lan')
 INFPORT = int(os.getenv('influxdb_port', 8086))
-INFUSER = os.getenv('influxdb_user', 'influxuser')
-INFPASSWORD = os.getenv('influxdb_password', 'influxpassword')
-INFDATABASE = os.getenv('influxdb_database', 'inverter')
+INFUSER = os.getenv('influxdb_user', 'grafana')
+INFPASSWORD = os.getenv('influxdb_password', 'grafana')
+INFDATABASE = os.getenv('influxdb_database', 'metrics')
 
 MODID = int(os.getenv('modbus_slave', 0x01))
 MODINTV = int(os.getenv('scan_interval', 10))
@@ -36,11 +33,14 @@ print ("Load modbus map %s" % MODEL)
 modmap_file = "modbus-" + MODEL
 modmap = __import__(modmap_file)
 
-client = ModbusTcpClient(INVIP, 
-                         timeout=INVTIMEOUT,
-                         RetryOnEmpty=True,
-                         retries=3,
-                         port=INVPORT)
+#client = ModbusTcpClient(INVIP, 
+#                         timeout=INVTIMEOUT,
+#                         RetryOnEmpty=True,
+#                         retries=3,
+#                         port=INVPORT)
+ser=RS485Ext.RS485Ext(port='/dev/serial0', baudrate=9600, timeout=5)
+client = ModbusSerialClient(method='rtu')
+client.socket = ser
 client.connect()
 
 try:
