@@ -1,0 +1,11 @@
+[Unit]
+Description=Solar query system
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/bin/python3 /home/pi/SOLARRUN/solarquerymod.py
+
+[Install]
+WantedBy=multi-user.target
